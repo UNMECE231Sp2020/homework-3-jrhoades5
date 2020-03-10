@@ -1,5 +1,5 @@
 #include <iostream>
-
+//GeneralList.hpp
 template <class Data>
 class List {
 	private:
@@ -15,6 +15,7 @@ class List {
 		Dlist *_back;
 
 		void reccopy(const Dlist *ptr) {
+		
 			if(ptr) { // if(ptr != nullptr) {
 				reccopy(ptr->next);
 				push_front(ptr->value);
@@ -36,111 +37,116 @@ class List {
 
 		~List() {
 			while(!empty()) {
-			//while(_size > 0) {
-				rm_frontnode();
+				//while(_size > 0) {
+					rm_frontnode();
 			}
 		}
 
 		Data &front() const {
 			return _front->value;
-		}
+			}
 
 		Data &back() const {
 			return _back->value;
-		}
-
+			}	
+		
 		size_t size() const {
 			return _size;
-		}
+			}
 
 		size_t length() const {
 			return _size;
-		}
+			}
 
-		void add_frontnode(Data data) {
+		void add_frontnode(Data data) {						
 			Dlist *newNode = new Dlist;
-			newNode->value = data;
+			newNode->value = data;																					
 			newNode->prev = nullptr;
-
-			if(_front==nullptr) {
+			
+			if(_front==nullptr) {			
 				newNode->next=nullptr;
 				_back=newNode;
-			}
-			else {
+									
+			}			
+			else{	
 				newNode->next=_front;
 				_front->back = newNode;
 			}
-
-			_front=newNode;
-			_size++;
-		}
-
-		void add_backnode(Data data) {
-			Dlist *newNode = new Dlist;
-			newNode->value = data;
-			newNode->next=nullptr;
-
-			if(_back!=nullptr) {
-				_back->next=newNode;
-				newNode->prev = _back;
-			}
-
-			if(_front==nullptr) {
+				
 				_front=newNode;
-				newNode->prev = nullptr;
+				_size++;
+							
 			}
-
-			_back=newNode;
-			_size+=1;
-		}
-
-		void rm_frontnode() {
-			Dlist *front_to_delete = _front;
-			_front = _front->next;
-
-			if(_front==nullptr) {
-				_back = nullptr;
-			}
-			else {
-				_front->prev = nullptr;
-			}
-
-			delete front_to_delete;
-			_size -= 1;
-		}
-
-		//CONVERT THIS FUNCTION
-		void rm_backnode() {
-			Llist *back_to_remove = _back;
-
-			if(_front->next!=nullptr) {
-				Llist *new_back = _front;
-				while(new_back->next!=_back) {
-					new_back=new_back->next;
+					
+			void add_backnode(Data data) {
+				Dlist *newNode = new Dlist;
+				newNode->value = data;
+				newNode->next=nullptr;
+		
+							
+				if(_back!=nullptr) {
+					_back->next=newNode;
+					newNode->prev = _back;
 				}
-				new_back->next=nullptr;
-				_back=new_back;
+				
+				if(_front==nullptr) {
+					_front=newNode;
+					newNode->prev = nullptr;
+				}
+				
+				_back=newNode;
+				_size+=1;
 			}
-			else {
-				_front=nullptr;
-				_back=nullptr;
+				
+			void rm_frontnode() {
+				Dlist *front_to_delete = _front;
+				_front = _front->next;
+							
+				if(_front==nullptr) {
+					_back = nullptr;
+				}
+				else {
+					_front->prev = nullptr;
+				}
+				delete front_to_delete;
+				_size -= 1;
 			}
-
-			delete back_to_remove;
-			_size-=1;
-		}
-
-		// leave this alone
-		bool empty() const {
-			return ((_front==nullptr) && (_back==nullptr));
-		}
-
-		//Modify this
-		void print() {
-			Llist *temp;
-			for(temp=_front; temp!=nullptr; temp=temp->next) {
-				std::cout << temp->value << " ";
+							
+			//CONVERT THIS FUNCTION
+			void rm_backnode() {
+				Llist *back_to_remove = _back;
+							
+				if(_front->next!=nullptr) {
+					Llist *new_back = _front;
+					while(new_back->next!=_back){		
+						new_back=new_back->next;
+					}
+										
+					new_back->next=nullptr;
+					_back=new_back;
+											
+				}
+				else {
+					_front=nullptr;
+					_back=nullptr;
+				}
+										
+				delete back_to_remove;
+				_size-=1;
 			}
-			std::cout << std::endl;
-		}
+							
+			// leave this alone
+			bool empty() const {
+				return ((_front==nullptr) && (_back==nullptr));
+			}
+								
+			//Modify this
+			void print() {
+				Llist *temp;
+							
+				for(temp=_front; temp!=nullptr; temp=temp->next) {
+					std::cout << temp->value << " ";
+				}
+				std::cout << std::endl;
+			}
 };
